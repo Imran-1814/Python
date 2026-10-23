@@ -1,0 +1,35 @@
+def calculate_grade(percentage):
+    if percentage >= 90:
+        return "A+"
+    elif percentage >= 80:
+        return "A"
+    elif percentage >= 70:
+        return "B"
+    elif percentage >= 60:
+        return "C"
+    elif percentage >= 50:
+        return "D"
+    else:
+        return "F"
+
+# Input student details
+name = input("Enter student name: ")
+
+marks = []
+for i in range(1, 6):
+    mark = float(input(f"Enter marks for Subject {i}: "))
+    marks.append(mark)
+
+# Calculations
+total = sum(marks)
+percentage = total / 5
+grade = calculate_grade(percentage)
+
+# Display Report Card
+print("\n===== REPORT CARD =====")
+print("Student Name:", name)
+print("Marks:", marks)
+print("Total Marks:", total, "/ 500")
+print("Percentage:", percentage, "%")
+print("Grade:", grade)
+print("=======================")
