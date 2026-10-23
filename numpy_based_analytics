@@ -1,0 +1,93 @@
+import numpy as np
+
+# -----------------------------
+# Generate Data
+# -----------------------------
+np.random.seed(10)  # For same output every time
+
+students = 100
+subjects = ["Math", "Physics", "Chemistry", "Biology", "English"]
+
+# Generate random marks (0-100)
+marks = np.random.randint(0, 101, size=(students, len(subjects)))
+
+# -----------------------------
+# Student Analytics
+# -----------------------------
+total_marks = np.sum(marks, axis=1)
+average_marks = np.mean(marks, axis=1)
+
+top_scorer = np.argmax(total_marks)
+lowest_scorer = np.argmin(total_marks)
+
+print("========== STUDENT ANALYTICS ==========")
+print("Top Scorer: Student", top_scorer + 1)
+print("Total Marks:", total_marks[top_scorer])
+
+print("\nLowest Scorer: Student", lowest_scorer + 1)
+print("Total Marks:", total_marks[lowest_scorer])
+
+print("\nAverage Marks of each Student:")
+print(average_marks)
+
+print("\nTotal Marks of each Student:")
+print(total_marks)
+
+# -----------------------------
+# Subject Analytics
+# -----------------------------
+subject_avg = np.mean(marks, axis=0)
+highest_subject = np.max(marks, axis=0)
+lowest_subject = np.min(marks, axis=0)
+
+print("\n========== SUBJECT ANALYTICS ==========")
+
+for i in range(len(subjects)):
+    print(f"{subjects[i]}")
+    print("Average:", round(subject_avg[i], 2))
+    print("Highest:", highest_subject[i])
+    print("Lowest:", lowest_subject[i])
+    print()
+
+# -----------------------------
+# Boolean Masking
+# -----------------------------
+print("========== BOOLEAN MASKING ==========")
+
+# Students with average >80
+above80 = np.where(average_marks > 80)[0]
+print("Students scoring average above 80:")
+print(above80 + 1)
+
+# Students failing (average <35)
+failing = np.where(average_marks < 35)[0]
+print("\nStudents failing (average <35):")
+print(failing + 1)
+
+# Students scoring above 90 in any subject
+above90 = np.where(np.any(marks > 90, axis=1))[0]
+print("\nStudents scoring above 90 in any subject:")
+print(above90 + 1)
+
+# -----------------------------
+# Ranking System
+# -----------------------------
+rank = np.argsort(total_marks)[::-1]
+
+print("\n========== TOP 3 RANKS ==========")
+for i in range(3):
+    print(f"Rank {i+1}: Student {rank[i]+1} - Total Marks = {total_marks[rank[i]]}")
+
+# -----------------------------
+# Scholarship Eligibility
+# -----------------------------
+eligible = np.where((average_marks >= 85) & (np.all(marks >= 70, axis=1)))[0]
+
+print("\n========== SCHOLARSHIP ELIGIBILITY ==========")
+
+if len(eligible) == 0:
+    print("No student is eligible.")
+else:
+    print("Eligible Students:")
+    for student in eligible:
+        print(f"Student {student+1} | Average = {average_marks[student]:.2f}")
